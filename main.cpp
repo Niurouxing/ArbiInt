@@ -116,19 +116,17 @@ int main()
     // }
 
  
-    auto a = ArbiInt<200>();
+    ArbiInt<400> a;
 
+    a.display();
 
-    a.fill().display();
+    ArbiInt<200> b = -1;
 
-    auto b = ArbiInt<120>();
+    b.display();
 
-    b.fill().display();
+    a = b;
 
-    auto c = a | b;
-
-    c.display();
- 
+    a.display();
 
 
     //   return 0;

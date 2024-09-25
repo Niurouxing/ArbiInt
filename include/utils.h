@@ -314,7 +314,7 @@ public:
         data[0] = static_cast<uint64_t>(val);
 
         // sign extension of the higher uint64_ts, all 1 or all 0 according to whether the 64-th bit of the lowest uint64_t is 1
-        uint64_t sign_extension = static_cast<uint64_t>(data[0] >> 63);
+        uint64_t sign_extension = static_cast<uint64_t>(static_cast<int64_t>(data[0]) >> 63);
         for (size_t i = 1; i < num_words; ++i)
         {
             data[i] = sign_extension;
@@ -359,10 +359,10 @@ public:
         requires(M > 64) && (M < N)
     constexpr ArbiInt(const ArbiInt<M> &other)
     {
-        std::memcpy(data.data(), other.data.data(), sizeof(uint64_t) * other.num_words);
+        std::copy(other.data.begin(), other.data.end(), data.begin());
 
         // sign extension of the higher uint64_ts, all 1 or all 0 according to whether the 64-th bit of the lowest uint64_t is 1
-        uint64_t sign_extension = static_cast<uint64_t>(data[other.num_words - 1] >> 63);
+        uint64_t sign_extension = static_cast<uint64_t>(static_cast<int64_t>(data[other.num_words - 1]) >> 63);
         for (size_t i = other.num_words; i < num_words; ++i)
         {
             data[i] = sign_extension;
